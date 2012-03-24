@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Matthew Horan"]
   s.email       = ["matthew.horan@livestream.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Mock location provider for navigator.geolocation}
+  s.description = %q{Ever need to test geolocation in your Rails app?  This gem makes it easy.}
 
   s.rubyforge_project = "neverland"
 
