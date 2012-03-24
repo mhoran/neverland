@@ -1,0 +1,9 @@
+<div>Latitude: <span id="latitude"></span></div>
+<div>Longitude: <span id="longitude"><span></div>
+
+<%= javascript_tag do %>
+  navigator.geolocation.getCurrentPosition(function(success) {
+    $('#latitude').text(success.coords.latitude);
+    $('#longitude').text(success.coords.longitude);
+  });
+<% end %>

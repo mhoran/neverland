@@ -1,5 +1,6 @@
 require "neverland/version"
+require 'neverland/middleware'
+require 'neverland/engine'
 
 module Neverland
-  # Your code goes here...
 end
