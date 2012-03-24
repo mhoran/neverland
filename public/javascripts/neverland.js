@@ -4,7 +4,7 @@ navigator.geolocation.getCurrentPosition = function(success, error) {
   success({coords: Neverland.getCoords(), timestamp: Date.now()});
 }
 
-var Neverland = new function() {
+var Neverland = (function() {
   var _latitude = 42.31283;
   var _longitude = -71.114287;
 
@@ -29,4 +29,4 @@ var Neverland = new function() {
       _longitude = longitude;
     }
   }
-}
+})();
