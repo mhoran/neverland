@@ -1,6 +1,6 @@
-[![Build Status](https://secure.travis-ci.org/mhoran/neverland.png)](http://travis-ci.org/mhoran/neverland)
-
 # Neverland
+
+[![Build Status](https://secure.travis-ci.org/mhoran/neverland.png)](http://travis-ci.org/mhoran/neverland)
 
 Neverland takes the pain out of testing HTML5 geolocation within your Rails
 app.  For more on HTML5 geolocation, check out [the

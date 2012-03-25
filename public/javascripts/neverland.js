@@ -1,12 +1,12 @@
 // http://dev.w3.org/geo/api/spec-source.html
 
 navigator.geolocation.getCurrentPosition = function(success, error) {
-  success({coords: Neverland.getCoords(), timestamp: Date.now()});
+  success({coords: Neverland.getCoords(), timestamp: Date.now()})
 }
 
 var Neverland = (function() {
-  var _latitude = 42.31283;
-  var _longitude = -71.114287;
+  var _latitude = 42.31283,
+      _longitude = -71.114287
 
   return {
     getCoords: function () {
@@ -18,7 +18,7 @@ var Neverland = (function() {
         altitudeAccuracy: null,
         heading: null,
         speed: null
-      };
+      }
     },
 
     setLatitude: function(latitude) {
@@ -29,4 +29,4 @@ var Neverland = (function() {
       _longitude = longitude;
     }
   }
-})();
+})()

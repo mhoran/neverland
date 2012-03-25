@@ -26,10 +26,10 @@ module Neverland
         if latitude.present? && longitude.present?
           script = Nokogiri::XML::Node.new('script', document)
           script['type'] = 'text/javascript'
-          script.inner_html = <<-SCRIPT
-            Neverland.setLatitude(#{latitude})
-            Neverland.setLongitude(#{longitude})
-          SCRIPT
+          script.inner_html = <<SCRIPT
+Neverland.setLatitude(#{latitude})
+Neverland.setLongitude(#{longitude})
+SCRIPT
           head << script
         end
 
