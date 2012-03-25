@@ -16,14 +16,12 @@ describe 'neverland' do
   end
 
   it 'should mock the provided coordinates on a successful response', :js => true do
-    visit '/'
-    cookie 'mock_latitude', '37.2630556'
-    cookie 'mock_longitude', '-115.7930198'
+    latitude = '37.2630556'
+    longitude = '-115.7930198'
+    visit root_path(:neverland => {:latitude => latitude, :longitude => longitude})
 
-    visit '/'
-
-    find('#latitude').should have_content('37.2630556')
-    find('#longitude').should have_content('-115.7930198')
+    find('#latitude').should have_content(latitude)
+    find('#longitude').should have_content(longitude)
   end
 
   it "should not mock on an error response" do
@@ -31,8 +29,10 @@ describe 'neverland' do
 
     page.should_not have_selector('head script[src="/javascripts/neverland.js"]')
   end
-end
 
-def cookie(name, value)
-  Capybara.current_session.driver.browser.manage.add_cookie(:name => name, :value => value)
+  it 'should display Permission Denied when the location request is denied', :js => true do
+    visit root_path(:neverland => {:error_code => 1})
+
+    find('#error').should have_content('Permission Denied')
+  end
 end

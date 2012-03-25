@@ -7,9 +7,12 @@ module Neverland
     end
 
     def call(env)
-      cookies = Rack::Request.new(env).cookies
-      latitude = cookies['mock_latitude']
-      longitude = cookies['mock_longitude']
+      params = Rack::Request.new(env).params
+      if params['neverland']
+        error = params['neverland']['error_code']
+        latitude = params['neverland']['latitude']
+        longitude = params['neverland']['longitude']
+      end
 
       status, headers, response = @app.call(env)
 
@@ -23,7 +26,14 @@ module Neverland
         script['src'] = '/javascripts/neverland.js'
         head << script
 
-        if latitude.present? && longitude.present?
+        if error
+          script = Nokogiri::XML::Node.new('script', document)
+          script['type'] = 'text/javascript'
+          script.inner_html = <<SCRIPT
+Neverland.setError(#{error})
+SCRIPT
+          head << script
+        elsif latitude && longitude
           script = Nokogiri::XML::Node.new('script', document)
           script['type'] = 'text/javascript'
           script.inner_html = <<SCRIPT

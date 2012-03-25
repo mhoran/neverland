@@ -24,6 +24,12 @@ Dummy::Application.configure do
 end
 ```
 
+By default, Neverland will mock the result of
+navigator.geolocation.getCurrentLocation to latitude 42.31283, longitude
+-71.114287.  This can be overridden by sending the parameters
+`neverland[:latitude]` and `neverland[:longitude]`.  Error states can also be
+triggered by setting `neverland[:error_code]`.
+
 ## Caveats
 
 The implementation is pretty stupid about when to override your browser's

@@ -1,9 +1,15 @@
 <div>Latitude: <span id="latitude"></span></div>
 <div>Longitude: <span id="longitude"><span></div>
+<div id="error"></div>
 
 <%= javascript_tag do %>
   navigator.geolocation.getCurrentPosition(function(success) {
-    $('#latitude').text(success.coords.latitude);
-    $('#longitude').text(success.coords.longitude);
+    $('#latitude').text(success.coords.latitude)
+    $('#longitude').text(success.coords.longitude)
+  }, function(error) {
+    switch(error.code) {
+      case error.PERMISSION_DENIED:
+        $('#error').text('Permission Denied')
+    }
   });
 <% end %>
