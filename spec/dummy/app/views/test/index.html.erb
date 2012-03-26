@@ -1,15 +1,19 @@
-<div>Latitude: <span id="latitude"></span></div>
-<div>Longitude: <span id="longitude"><span></div>
+<div id="success">
+  Latitude: <span id="latitude"></span><br>
+  Longitude: <span id="longitude"></span>
+</div>
+
 <div id="error"></div>
 
 <%= javascript_tag do %>
-  navigator.geolocation.getCurrentPosition(function(success) {
-    $('#latitude').text(success.coords.latitude)
-    $('#longitude').text(success.coords.longitude)
-  }, function(error) {
-    switch(error.code) {
-      case error.PERMISSION_DENIED:
+  navigator.geolocation.getCurrentPosition(function(position) {
+    $('#latitude').text(position.coords.latitude)
+    $('#longitude').text(position.coords.longitude)
+  }, function(positionError) {
+    switch(positionError.code) {
+      case positionError.PERMISSION_DENIED:
         $('#error').text('Permission Denied')
+        $('#success').hide()
     }
   });
 <% end %>
