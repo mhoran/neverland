@@ -1,6 +1,24 @@
 require 'spec_helper'
 
 describe 'neverland' do
+  it "should not insert the mock JavaScript on an unsuccessful response" do
+    lambda { visit '/nonexistent' }.should raise_error(ActionController::RoutingError)
+
+    page.should_not have_selector('head script[src="/javascripts/neverland.js"]')
+  end
+
+  it "should not raise an error if the response has no head" do
+    lambda { visit '/decapitated' }.should_not raise_error
+
+    page.should_not have_selector('head script[src="/javascripts/neverland.js"]')
+  end
+
+  it 'should not insert the mock JavaScript if the response has no head' do
+    visit '/decapitated'
+
+    page.should_not have_selector('head script[src="/javascripts/neverland.js"]')
+  end
+
   it 'should insert the mock JavaScript on a successful response' do
     visit '/'
 
@@ -22,12 +40,6 @@ describe 'neverland' do
 
     find('#latitude').should have_content(latitude)
     find('#longitude').should have_content(longitude)
-  end
-
-  it "should not mock on an error response" do
-    lambda { visit '/nonexistent' }.should raise_error(ActionController::RoutingError)
-
-    page.should_not have_selector('head script[src="/javascripts/neverland.js"]')
   end
 
   it 'should display Permission Denied when the location request is denied', :js => true do
