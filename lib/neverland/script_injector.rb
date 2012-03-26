@@ -1,7 +1,7 @@
 module Neverland
   class ScriptInjector
-    def self.inject(response, parameters)
-      new(response).inject(parameters)
+    def self.inject(response, params)
+      new(response).inject(params)
     end
 
     def initialize(response)
@@ -13,34 +13,34 @@ module Neverland
       end
     end
 
-    def inject(parameters)
-      @injector.inject(parameters)
+    def inject(params)
+      @injector.inject(params)
     end
   end
 
   class ActionDispatchScriptInjector
     def initialize(response)
       @response = response
+      @document = Nokogiri::HTML(@response.body)
+      @head = @document.at('head')
     end
 
-    def inject(parameters)
-      latitude, longitude, error_code = parameters
-
-      if head
+    def inject(params)
+      if @head
         inject_script(:src => '/javascripts/neverland.js')
 
-        if error_code
+        if params.error_code
           inject_script(:body => <<SCRIPT)
-Neverland.setError(#{error_code})
+Neverland.setError(#{params.error_code})
 SCRIPT
-        elsif latitude && longitude
+        elsif params.latitude && params.longitude
           inject_script(:body => <<SCRIPT)
-Neverland.setLatitude(#{latitude})
-Neverland.setLongitude(#{longitude})
+Neverland.setLatitude(#{params.latitude})
+Neverland.setLongitude(#{params.longitude})
 SCRIPT
         end
 
-        @response.body = document.to_s
+        @response.body = @document.to_s
       end
 
       @response
@@ -48,20 +48,12 @@ SCRIPT
 
     private
 
-    def document
-      @document ||= Nokogiri::HTML(@response.body)
-    end
-
-    def head
-      @head ||= document.at('head')
-    end
-
     def inject_script(opts = {})
-      script = Nokogiri::XML::Node.new('script', document)
+      script = Nokogiri::XML::Node.new('script', @document)
       script['type'] = 'text/javascript'
       script['src'] = opts[:src] if opts[:src]
       script.inner_html = opts[:body] if opts[:body]
-      head << script
+      @head << script
     end
   end
 

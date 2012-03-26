@@ -7,11 +7,11 @@ module Neverland
     end
 
     def call(env)
-      parameters = ParameterExtractor.extract(env)
+      params = ParameterExtractor.extract(env)
 
       status, headers, response = @app.call(env)
 
-      response = ScriptInjector.inject(response, parameters)
+      response = ScriptInjector.inject(response, params)
 
       [status, headers, response]
     end

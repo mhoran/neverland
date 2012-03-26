@@ -4,7 +4,7 @@ module Neverland
   describe ScriptInjector do
     describe '.inject' do
       context 'with an ActionDispatch::Response' do
-        let(:parameters) { [] }
+        let(:parameters) { Parameters.new }
         let(:response) { ActionDispatch::Response.new(200, {}, ['<html><head></head></html>']) }
 
         it 'should insert the mock JavaScript into the head' do
@@ -14,7 +14,7 @@ module Neverland
       end
 
       context 'with a Rack::Response' do
-        let(:parameters) { [] }
+        let(:parameters) { Parameters.new }
         let(:response) { Rack::Response.new(['<html><head></head></html>'], 200, {}) }
 
         it 'should not insert the mock JavaScript into the head' do

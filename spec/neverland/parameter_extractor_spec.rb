@@ -10,15 +10,15 @@ module Neverland
       let(:env) { Rack::MockRequest.env_for('/bananas', :params => params) }
 
       it 'should return the provided latitude' do
-        ParameterExtractor.extract(env)[0].should == latitude
+        ParameterExtractor.extract(env).latitude.should == latitude
       end
 
       it 'should return the provided longitude' do
-        ParameterExtractor.extract(env)[1].should == longitude
+        ParameterExtractor.extract(env).longitude.should == longitude
       end
 
       it 'should return the provided error code' do
-        ParameterExtractor.extract(env)[2].should == error_code
+        ParameterExtractor.extract(env).error_code.should == error_code
       end
     end
   end

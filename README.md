@@ -32,6 +32,8 @@ triggered by setting `neverland[:error_code]`.
 
 ## Caveats
 
-The implementation is pretty stupid about when to override your browser's
-geolocation implementation (it just inserts a JavaScript tag into the
-response).  I'll work on making this smarter.
+* The implementation naievely overrides the browser's geolocation
+  implementation by inserting a JavaScript tag into the response).
+
+* The middleware will treat the response body as HTML.  If you're using XHTML,
+  this could cause issues.

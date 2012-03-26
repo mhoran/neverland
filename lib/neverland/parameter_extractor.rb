@@ -9,9 +9,7 @@ module Neverland
     end
 
     def extract
-      if neverland_params
-        [latitude, longitude, error_code]
-      end
+      Parameters.new(latitude, longitude, error_code)
     end
 
     private
@@ -21,7 +19,7 @@ module Neverland
     end
 
     def neverland_params
-      params['neverland']
+      params['neverland'] || {}
     end
 
     def latitude
@@ -34,6 +32,16 @@ module Neverland
 
     def error_code
       neverland_params['error_code']
+    end
+  end
+
+  class Parameters
+    attr_reader :latitude, :longitude, :error_code
+
+    def initialize(latitude = nil, longitude = nil, error_code = nil)
+      @latitude = latitude
+      @longitude = longitude
+      @error_code = error_code
     end
   end
 end
