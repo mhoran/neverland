@@ -33,7 +33,7 @@ triggered by setting `neverland[:error_code]`.
 ## Caveats
 
 * The implementation naievely overrides the browser's geolocation
-  implementation by inserting a JavaScript tag into the response).
+  implementation by inserting a JavaScript tag into the response.
 
 * The middleware will treat the response body as HTML.  If you're using XHTML,
   this could cause issues.
